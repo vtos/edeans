@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Model\FormOfControl;
+namespace Edeans\Domain\Model\FormOfControl;
 
 final class FormOfControlType
 {

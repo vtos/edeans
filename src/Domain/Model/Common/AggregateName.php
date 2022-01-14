@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Model\Common;
+namespace Edeans\Domain\Model\Common;
 
 use Webmozart\Assert\Assert;
 

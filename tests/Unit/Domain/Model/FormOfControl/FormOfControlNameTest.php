@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Unit\Domain\Model\FormOfControl;
+namespace Edeans\Tests\Unit\Domain\Model\FormOfControl;
 
-use Domain\Model\FormOfControl\FormOfControlName;
+use Edeans\Domain\Model\FormOfControl\FormOfControlName;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
