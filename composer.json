@@ -1,0 +1,22 @@
+{
+  "name": "vtos/edeans",
+  "description": "",
+  "authors": [
+    {
+      "name": "Vitaly Potenko",
+      "email": "potenkov@gmail.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Edeans:\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Edeans\\Tests:\\": "tests/"
+    }
+  }
+}
