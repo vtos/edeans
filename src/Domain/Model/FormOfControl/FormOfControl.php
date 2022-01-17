@@ -6,19 +6,17 @@ namespace Edeans\Domain\Model\FormOfControl;
 
 class FormOfControl
 {
+    private FormOfControlId $id;
+
     private FormOfControlName $name;
 
     private FormOfControlType $type;
 
-    public function __construct(FormOfControlName $name, FormOfControlType $type)
+    public function __construct(FormOfControlId $id, FormOfControlName $name, FormOfControlType $type)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->type = $type;
-    }
-
-    public function name(): FormOfControlName
-    {
-        return $this->name;
     }
 
     public function rename(FormOfControlName $name): void
