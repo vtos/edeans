@@ -9,7 +9,7 @@
   ],
   "require": {
     "php": "7.4.*",
-    "doctrine/orm": "*"
+    "doctrine/orm": "^2.11"
   },
   "autoload": {
     "psr-4": {
