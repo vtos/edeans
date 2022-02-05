@@ -10,6 +10,7 @@ use Edeans\Domain\Model\FormOfControl\FormOfControlId;
 use Edeans\Domain\Model\FormOfControl\FormOfControlName;
 use Edeans\Domain\Model\FormOfControl\FormOfControlRepository;
 use Edeans\Domain\Model\FormOfControl\FormOfControlType;
+use Edeans\Infrastructure\RamseyUuid;
 use Edeans\Infrastructure\TestServiceContainer;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +34,7 @@ final class FormOfControlRepositoryUsingORMTest extends TestCase
         $this->repository->store(
             new FormOfControl(
                 FormOfControlId::fromUuid(
-
+                    new RamseyUuid()
                 ),
                 FormOfControlName::fromString('Exam'),
                 FormOfControlType::fromString(FormOfControlType::GRADE_TYPE)
