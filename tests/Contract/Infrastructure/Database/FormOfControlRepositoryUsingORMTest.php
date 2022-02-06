@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Edeans\Tests\Contract\Infrastructure\Database;
 
 use Doctrine\DBAL\Exception as DoctrineDBALException;
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\ORMException;
 use Edeans\Domain\Model\FormOfControl\FormOfControl;
 use Edeans\Domain\Model\FormOfControl\FormOfControlId;
@@ -22,29 +22,6 @@ final class FormOfControlRepositoryUsingORMTest extends TestCase
     private FormOfControlRepository $repository;
 
     private EntityManager $entityManager;
-
-    /**
-     * @throws ORMException
-     * @throws DoctrineDBALException
-     */
-    protected function setUp(): void
-    {
-        $container = new TestServiceContainer();
-        $this->repository = $container->formOfControlRepository();
-        $this->entityManager = $container->entityManager();
-
-        $conn = $this->entityManager->getConnection();
-        $tables = $conn->createSchemaManager()->listTables();
-
-        array_walk(
-            $tables,
-            function(Table $table) use($conn) {
-                $conn->executeStatement(
-                    $conn->getDatabasePlatform()->getTruncateTableSQL($table->getName())
-                );
-            }
-        );
-    }
 
     /**
      * @test
@@ -83,5 +60,43 @@ final class FormOfControlRepositoryUsingORMTest extends TestCase
             0,
             $this->entityManager->getRepository(FormOfControl::class)->count([])
         );
+    }
+
+    /**
+     * @throws ORMException
+     * @throws DoctrineDBALException
+     */
+    protected function setUp(): void
+    {
+        $container = new TestServiceContainer();
+        $this->repository = $container->formOfControlRepository();
+        $this->entityManager = $container->entityManager();
+
+        $this->clearStorage();
+    }
+
+    /**
+     * @throws DoctrineDBALException
+     */
+    private function clearStorage(): void
+    {
+        if (!$metadata = $this->entityManager->getMetadataFactory()->getAllMetadata()) {
+            return;
+        }
+
+        $tableNames = array_map(
+            fn(ClassMetadata $classMetadata): string => $classMetadata->getTableName(),
+            array_filter(
+                $metadata,
+                fn(ClassMetadata $classMetadata): bool => !$classMetadata->isEmbeddedClass
+            )
+        );
+
+        $conn = $this->entityManager->getConnection();
+        foreach ($tableNames as $tableName) {
+            $conn->executeStatement(
+                $conn->getDatabasePlatform()->getTruncateTableSQL($tableName)
+            );
+        }
     }
 }
