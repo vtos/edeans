@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Edeans\Infrastructure\Database;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Edeans\Domain\Model\FormOfControl\FormOfControl;
 use Edeans\Domain\Model\FormOfControl\FormOfControlId;
-use Edeans\Domain\Model\FormOfControl\FormOfControlName;
 use Edeans\Domain\Model\FormOfControl\FormOfControlRepository;
 
 final class FormOfControlRepositoryUsingORM implements FormOfControlRepository
@@ -20,14 +21,14 @@ final class FormOfControlRepositoryUsingORM implements FormOfControlRepository
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws TransactionRequiredException
+     * @throws ORMException
+     */
     public function getOneById(FormOfControlId $id): FormOfControl
     {
-        // TODO: Implement getOneById() method.
-    }
-
-    public function findByName(FormOfControlName $name): ?FormOfControl
-    {
-        // TODO: Implement findByName() method.
+        return $this->entityManager->find(FormOfControl::class, $id);
     }
 
     /**

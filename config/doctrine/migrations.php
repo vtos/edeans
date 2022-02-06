@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'table_storage' => [
         'table_name' => 'doctrine_migration_versions',
@@ -9,12 +11,11 @@ return [
         'execution_time_column_name' => 'execution_time',
     ],
     'migrations_paths' => [
-        'Edeans\Infrastructure\Database\Migrations' => '/src/Infrastructure/Database/Migrations',
+        'Edeans\Infrastructure\Database\Migrations' => __DIR__ . '/../../src/Infrastructure/Database/Migrations',
     ],
     'all_or_nothing' => true,
     'transactional' => true,
     'check_database_platform' => true,
     'organize_migrations' => 'none',
     'connection' => null,
-    'em' => null,
 ];

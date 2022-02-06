@@ -12,18 +12,28 @@ use Edeans\Infrastructure\Database\FormOfControlRepositoryUsingORM;
 
 final class TestServiceContainer
 {
+    private ?EntityManager $entityManager = null;
+
+    /**
+     * @throws ORMException
+     */
+    public function entityManager(): EntityManager
+    {
+        return null !== $this->entityManager
+            ? $this->entityManager
+            : $this->entityManager = EntityManager::create(
+                ['driver' => 'pdo_sqlite', 'path' => __DIR__ . '/../../var/sqlite/edeans_test.db',],
+                Setup::createXMLMetadataConfiguration(
+                    [__DIR__ . '/../../config/doctrine/mappings',]
+                )
+            );
+    }
+
     /**
      * @throws ORMException
      */
     public function formOfControlRepository(): FormOfControlRepository
     {
-        return new FormOfControlRepositoryUsingORM(
-            EntityManager::create(
-                ['driver' => 'pdo_sqlite', 'path' => __DIR__ . '/../../var/sqlite/edeans_test.db'],
-                Setup::createXMLMetadataConfiguration(
-                    [__DIR__ . '/../../config/doctrine/mappings']
-                )
-            )
-        );
+        return new FormOfControlRepositoryUsingORM($this->entityManager());
     }
 }

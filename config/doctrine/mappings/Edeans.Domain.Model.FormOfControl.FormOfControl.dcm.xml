@@ -8,22 +8,10 @@
     "
 >
 
-    <entity name="Edeans\Domain\Model\FormOfControl\FormOfControl">
+    <entity name="Edeans\Domain\Model\FormOfControl\FormOfControl" table="form_of_control">
         <embedded name="id" class="FormOfControlId" use-column-prefix="false"/>
         <embedded name="name" class="FormOfControlName" use-column-prefix="false"/>
         <embedded name="type" class="FormOfControlType" use-column-prefix="false"/>
     </entity>
-
-    <embeddable name="FormOfControlId">
-        <id name="id" column="id" type="string"/>
-    </embeddable>
-
-    <embeddable name="FormOfControlName">
-        <field name="name" column="name" type="string"/>
-    </embeddable>
-
-    <embeddable name="FormOfControlType">
-        <field name="type" column="type" type="string"/>
-    </embeddable>
 
 </doctrine-mapping>

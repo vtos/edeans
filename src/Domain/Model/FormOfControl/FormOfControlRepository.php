@@ -8,8 +8,6 @@ interface FormOfControlRepository
 {
     public function getOneById(FormOfControlId $id): FormOfControl;
 
-    public function findByName(FormOfControlName $name): ?FormOfControl;
-
     public function store(FormOfControl $formOfControl): void;
 
     public function remove(FormOfControl $formOfControl): void;
