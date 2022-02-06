@@ -40,8 +40,12 @@ final class FormOfControlRepositoryUsingORM implements FormOfControlRepository
         $this->entityManager->flush();
     }
 
+    /**
+     * @throws ORMException
+     */
     public function remove(FormOfControl $formOfControl): void
     {
-        // TODO: Implement remove() method.
+        $this->entityManager->remove($formOfControl);
+        $this->entityManager->flush();
     }
 }
