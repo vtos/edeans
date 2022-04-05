@@ -2,6 +2,9 @@
 
 set -e
 
+mkdir -p var/sqlite
+touch -a var/sqlite/edeans_test.db
+
 # Migrations up
 vendor/bin/doctrine-migrations migrate --no-interaction
 
