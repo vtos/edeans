@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping
+    xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        https://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd
+    "
+>
+    <entity name="Edeans\Domain\Model\CurriculumDiscipline\CurriculumDiscipline" table="curriculum_discipline">
+        <embedded name="id" class="CurriculumDisciplineId" use-column-prefix="false"/>
+        <many-to-one field="academicDiscipline" target-entity="Edeans\Domain\Model\AcademicDiscipline\AcademicDiscipline">
+            <join-column name="academic_discipline_id" referenced-column-name="id"/>
+        </many-to-one>
+        <one-to-one field="term" target-entity="Edeans\Domain\Model\Term\Term">
+            <join-column name="term_id" referenced-column-name="id"/>
+        </one-to-one>
+        <one-to-one field="formOfControl" target-entity="Edeans\Domain\Model\FormOfControl\FormOfControl">
+            <join-column name="form_of_control_id" referenced-column-name="id"/>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

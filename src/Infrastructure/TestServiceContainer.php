@@ -7,7 +7,9 @@ namespace Edeans\Infrastructure;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
+use Edeans\Domain\Model\CurriculumDiscipline\CurriculumDisciplineRepository;
 use Edeans\Domain\Model\FormOfControl\FormOfControlRepository;
+use Edeans\Infrastructure\Database\CurriculumDisciplineRepositoryUsingORM;
 use Edeans\Infrastructure\Database\FormOfControlRepositoryUsingORM;
 
 final class TestServiceContainer
@@ -35,5 +37,13 @@ final class TestServiceContainer
     public function formOfControlRepository(): FormOfControlRepository
     {
         return new FormOfControlRepositoryUsingORM($this->entityManager());
+    }
+
+    /**
+     * @throws ORMException
+     */
+    public function curriculumDisciplineRepository(): CurriculumDisciplineRepository
+    {
+        return new CurriculumDisciplineRepositoryUsingORM($this->entityManager());
     }
 }

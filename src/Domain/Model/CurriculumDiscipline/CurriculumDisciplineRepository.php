@@ -8,5 +8,5 @@ interface CurriculumDisciplineRepository
 {
     public function store(CurriculumDiscipline $curriculumDiscipline): void;
 
-    public function remove(CurriculumDisciplineId $id): void;
+    public function remove(CurriculumDiscipline $curriculumDiscipline): void;
 }
