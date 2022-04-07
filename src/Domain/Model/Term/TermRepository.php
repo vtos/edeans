@@ -8,5 +8,5 @@ interface TermRepository
 {
     public function store(Term $term): void;
 
-    public function remove(TermId $id): void;
+    public function remove(Term $term): void;
 }
