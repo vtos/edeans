@@ -29,4 +29,9 @@ class CurriculumDiscipline
         $this->term = $term;
         $this->formOfControl = $formOfControl;
     }
+
+    public function change_form_of_control(FormOfControl $formOfControl): void
+    {
+        $this->formOfControl = $formOfControl;
+    }
 }
