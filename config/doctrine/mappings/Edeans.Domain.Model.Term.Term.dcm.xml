@@ -10,5 +10,8 @@
     <entity name="Edeans\Domain\Model\Term\Term" table="term">
         <embedded name="id" class="TermId" use-column-prefix="false"/>
         <embedded name="name" class="TermName" use-column-prefix="false"/>
+        <embedded name="temporalStatus" class="TemporalStatus" use-column-prefix="false"/>
+        <embedded name="enrollingStatus" class="EnrollingStatus" use-column-prefix="false"/>
+        <embedded name="visibilityStatus" class="VisibilityStatus" use-column-prefix="false"/>
     </entity>
 </doctrine-mapping>
