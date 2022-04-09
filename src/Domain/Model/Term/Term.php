@@ -10,9 +10,28 @@ class Term
 
     private TermName $name;
 
-    public function __construct(TermId $id, TermName $name)
-    {
+    private TemporalStatus $temporalStatus;
+
+    private EnrollingStatus $enrollingStatus;
+
+    private VisibilityStatus $visibilityStatus;
+
+    public function __construct(
+        TermId $id,
+        TermName $name,
+        TemporalStatus $temporalStatus,
+        EnrollingStatus $enrollingStatus,
+        VisibilityStatus $visibilityStatus
+    ) {
         $this->id = $id;
         $this->name = $name;
+        $this->temporalStatus = $temporalStatus;
+        $this->enrollingStatus = $enrollingStatus;
+        $this->visibilityStatus = $visibilityStatus;
+    }
+
+    public static function withDefaultStatus(TermId $id, TermName $name): self
+    {
+        return new self($id, $name, TemporalStatus::upcoming(), EnrollingStatus::closed(), VisibilityStatus::visible());
     }
 }
