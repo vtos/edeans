@@ -49,10 +49,7 @@ final class CurriculumDisciplineRepositoryUsingORMTest extends TestCase
         );
         $this->academicDisciplineRepository->store($academicDiscipline);
 
-        $term = new Term(
-            TermId::fromUuid(new RamseyUuid()),
-            TermName::fromString('Term 1')
-        );
+        $term = Term::withDefaultStatus(TermId::fromUuid(new RamseyUuid()), TermName::fromString('Term 1'));
         $this->termRepository->store($term);
 
         $formOfControl = new FormOfControl(

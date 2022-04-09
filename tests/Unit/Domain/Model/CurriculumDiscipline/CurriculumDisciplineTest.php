@@ -13,6 +13,8 @@ use Edeans\Domain\Model\FormOfControl\FormOfControl;
 use Edeans\Domain\Model\FormOfControl\FormOfControlId;
 use Edeans\Domain\Model\FormOfControl\FormOfControlName;
 use Edeans\Domain\Model\FormOfControl\FormOfControlType;
+use Edeans\Domain\Model\Term\EnrollingStatus;
+use Edeans\Domain\Model\Term\TemporalStatus;
 use Edeans\Domain\Model\Term\Term;
 use Edeans\Domain\Model\Term\TermId;
 use Edeans\Domain\Model\Term\TermName;
@@ -33,7 +35,7 @@ final class CurriculumDisciplineTest extends TestCase
             AcademicDisciplineId::fromUuid($ramseyUuid),
             AcademicDisciplineName::fromString('English')
         );
-        $term = new Term(TermId::fromUuid($ramseyUuid), TermName::fromString('Term 1'));
+        $term = Term::withDefaultStatus(TermId::fromUuid($ramseyUuid), TermName::fromString('Term 1'));
         $formOfControl = new FormOfControl(
             FormOfControlId::fromUuid(new RamseyUuid()),
             FormOfControlName::fromString('Credit'),
