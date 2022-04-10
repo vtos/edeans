@@ -13,8 +13,6 @@ use Edeans\Domain\Model\FormOfControl\FormOfControl;
 use Edeans\Domain\Model\FormOfControl\FormOfControlId;
 use Edeans\Domain\Model\FormOfControl\FormOfControlName;
 use Edeans\Domain\Model\FormOfControl\FormOfControlType;
-use Edeans\Domain\Model\Term\EnrollingStatus;
-use Edeans\Domain\Model\Term\TemporalStatus;
 use Edeans\Domain\Model\Term\Term;
 use Edeans\Domain\Model\Term\TermId;
 use Edeans\Domain\Model\Term\TermName;
