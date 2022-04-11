@@ -12,7 +12,8 @@
     "doctrine/orm": "^2.11",
     "ramsey/uuid": "^4.2",
     "doctrine/migrations": "^3.4",
-    "symfony/cache": "^5.4"
+    "symfony/cache": "^5.4",
+    "laminas/laminas-hydrator": "^4.3"
   },
   "autoload": {
     "psr-4": {
