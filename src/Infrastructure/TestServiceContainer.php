@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Edeans\Infrastructure;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
+use Edeans\Application\ListTerms\TermsListRepository;
 use Edeans\Domain\Model\AcademicDiscipline\AcademicDisciplineRepository;
 use Edeans\Domain\Model\CurriculumDiscipline\CurriculumDisciplineRepository;
 use Edeans\Domain\Model\FormOfControl\FormOfControlRepository;
@@ -14,11 +18,15 @@ use Edeans\Domain\Model\Term\TermRepository;
 use Edeans\Infrastructure\Database\AcademicDisciplineRepositoryUsingORM;
 use Edeans\Infrastructure\Database\CurriculumDisciplineRepositoryUsingORM;
 use Edeans\Infrastructure\Database\FormOfControlRepositoryUsingORM;
+use Edeans\Infrastructure\Database\TermsListRepositoryUsingDbal;
 use Edeans\Infrastructure\Database\TermRepositoryUsingORM;
+use Laminas\Hydrator\ObjectPropertyHydrator;
 
 final class TestServiceContainer
 {
     private ?EntityManager $entityManager = null;
+
+    private ?Connection $connection = null;
 
     /**
      * @throws ORMException
@@ -65,5 +73,26 @@ final class TestServiceContainer
     public function curriculumDisciplineRepository(): CurriculumDisciplineRepository
     {
         return new CurriculumDisciplineRepositoryUsingORM($this->entityManager());
+    }
+
+    /**
+     * @throws DBALException
+     */
+    public function termsListRepository(): TermsListRepository
+    {
+        return new TermsListRepositoryUsingDbal($this->connection(), new ObjectPropertyHydrator());
+    }
+
+    /**
+     * @throws DBALException
+     */
+    private function connection(): Connection
+    {
+        return null !== $this->connection
+            ? $this->connection
+            : DriverManager::getConnection([
+                'driver' => 'pdo_sqlite',
+                'path' => __DIR__ . '/../../var/sqlite/edeans_test.db',
+            ]);
     }
 }
