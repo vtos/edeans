@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\Domain\Model\CurriculumDiscipline;
+namespace Edeans\Tests\Unit\Domain\Model\CurriculumDiscipline;
 
 use Edeans\Domain\Model\AcademicDiscipline\AcademicDiscipline;
 use Edeans\Domain\Model\AcademicDiscipline\AcademicDisciplineId;

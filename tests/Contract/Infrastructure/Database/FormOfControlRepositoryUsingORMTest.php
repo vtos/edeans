@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Edeans\Tests\Contract\Infrastructure\Database;
 
-use Doctrine\DBAL\Exception as DoctrineDBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\ORMException;
 use Edeans\Domain\Model\FormOfControl\FormOfControl;
 use Edeans\Domain\Model\FormOfControl\FormOfControlId;
@@ -15,9 +14,9 @@ use Edeans\Domain\Model\FormOfControl\FormOfControlRepository;
 use Edeans\Domain\Model\FormOfControl\FormOfControlType;
 use Edeans\Infrastructure\RamseyUuid;
 use Edeans\Infrastructure\TestServiceContainer;
-use PHPUnit\Framework\TestCase;
+use Edeans\Tests\AbstractDatabaseAwareTestCase;
 
-final class FormOfControlRepositoryUsingORMTest extends TestCase
+final class FormOfControlRepositoryUsingORMTest extends AbstractDatabaseAwareTestCase
 {
     private FormOfControlRepository $repository;
 
@@ -64,39 +63,14 @@ final class FormOfControlRepositoryUsingORMTest extends TestCase
 
     /**
      * @throws ORMException
-     * @throws DoctrineDBALException
+     * @throws DBALException
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $container = new TestServiceContainer();
         $this->repository = $container->formOfControlRepository();
         $this->entityManager = $container->entityManager();
-
-        $this->clearStorage();
-    }
-
-    /**
-     * @throws DoctrineDBALException
-     */
-    private function clearStorage(): void
-    {
-        if (!$metadata = $this->entityManager->getMetadataFactory()->getAllMetadata()) {
-            return;
-        }
-
-        $tableNames = array_map(
-            fn(ClassMetadata $classMetadata): string => $classMetadata->getTableName(),
-            array_filter(
-                $metadata,
-                fn(ClassMetadata $classMetadata): bool => !$classMetadata->isEmbeddedClass
-            )
-        );
-
-        $conn = $this->entityManager->getConnection();
-        foreach ($tableNames as $tableName) {
-            $conn->executeStatement(
-                $conn->getDatabasePlatform()->getTruncateTableSQL($tableName)
-            );
-        }
     }
 }

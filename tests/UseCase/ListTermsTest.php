@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UseCase;
+namespace Edeans\Tests\UseCase;
 
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\ORMException;
@@ -15,9 +15,9 @@ use Edeans\Domain\Model\Term\TermName;
 use Edeans\Domain\Model\Term\TermRepository;
 use Edeans\Infrastructure\RamseyUuid;
 use Edeans\Infrastructure\TestServiceContainer;
-use PHPUnit\Framework\TestCase;
+use Edeans\Tests\AbstractDatabaseAwareTestCase;
 
-final class ListTermsTest extends TestCase
+final class ListTermsTest extends AbstractDatabaseAwareTestCase
 {
     private TermRepository $termRepository;
 
@@ -67,6 +67,8 @@ final class ListTermsTest extends TestCase
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $container = new TestServiceContainer();
         $this->termRepository = $container->termRepository();
         $this->termsListRepository = $container->termsListRepository();
