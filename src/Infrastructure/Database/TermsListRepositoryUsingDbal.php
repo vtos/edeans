@@ -9,6 +9,7 @@ use Doctrine\DBAL\Exception as DBALException;
 use Edeans\Application\ListTerms\Term;
 use Edeans\Application\ListTerms\TermsListRepository;
 use Edeans\Application\ListTerms\TermsList;
+use Edeans\Domain\Model\Term\VisibilityStatus;
 use Laminas\Hydrator\ObjectPropertyHydrator;
 
 final class TermsListRepositoryUsingDbal implements TermsListRepository
@@ -28,7 +29,11 @@ final class TermsListRepositoryUsingDbal implements TermsListRepository
      */
     public function list(): TermsList
     {
-        $resultSet = $this->connection->executeQuery('SELECT name FROM term');
+        $resultSet = $this->connection->executeQuery(
+            'SELECT name FROM term WHERE visibility_status = ?', [
+                VisibilityStatus::visible()->asString()
+            ]
+        );
 
         $termsList = new TermsList();
         foreach ($resultSet->fetchAllAssociative() as $termAsAssoc) {
