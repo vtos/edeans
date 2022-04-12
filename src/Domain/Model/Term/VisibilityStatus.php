@@ -17,6 +17,11 @@ final class VisibilityStatus
         $this->status = $status;
     }
 
+    public function asString(): string
+    {
+        return $this->status;
+    }
+
     public static function visible(): self
     {
         return new self(self::VISIBLE);
