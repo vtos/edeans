@@ -30,6 +30,11 @@ class Term
         $this->visibilityStatus = $visibilityStatus;
     }
 
+    public function hide(): void
+    {
+        $this->visibilityStatus = VisibilityStatus::hidden();
+    }
+
     public static function withDefaultStatus(TermId $id, TermName $name): self
     {
         return new self($id, $name, TemporalStatus::upcoming(), EnrollingStatus::closed(), VisibilityStatus::visible());
