@@ -17,6 +17,16 @@ final class EnrollingStatus
         $this->status = $status;
     }
 
+    public function isOpen(): bool
+    {
+        return self::OPEN === $this->status;
+    }
+
+    public function isClosed(): bool
+    {
+        return self::CLOSED === $this->status;
+    }
+
     public static function open(): self
     {
         return new self(self::OPEN);
