@@ -16,7 +16,7 @@ class Term
 
     private VisibilityStatus $visibilityStatus;
 
-    public function __construct(
+    private function __construct(
         TermId $id,
         TermName $name,
         TemporalStatus $temporalStatus,
