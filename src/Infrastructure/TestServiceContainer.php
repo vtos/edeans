@@ -10,6 +10,7 @@ use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
+use Edeans\Application\Application;
 use Edeans\Application\ListTerms\TermsListRepository;
 use Edeans\Domain\Model\AcademicDiscipline\AcademicDisciplineRepository;
 use Edeans\Domain\Model\CurriculumDiscipline\CurriculumDisciplineRepository;
@@ -20,6 +21,7 @@ use Edeans\Infrastructure\Database\CurriculumDisciplineRepositoryUsingORM;
 use Edeans\Infrastructure\Database\FormOfControlRepositoryUsingORM;
 use Edeans\Infrastructure\Database\TermsListRepositoryUsingDbal;
 use Edeans\Infrastructure\Database\TermRepositoryUsingORM;
+use Edeans\Tests\UseCase\Utility\UseCaseTestApplication;
 use Laminas\Hydrator\ObjectPropertyHydrator;
 
 final class TestServiceContainer
@@ -27,6 +29,11 @@ final class TestServiceContainer
     private ?EntityManager $entityManager = null;
 
     private ?Connection $connection = null;
+
+    public function application(): Application
+    {
+        return new UseCaseTestApplication();
+    }
 
     /**
      * @throws ORMException
