@@ -32,7 +32,7 @@ final class TestServiceContainer
 
     public function application(): Application
     {
-        return new UseCaseTestApplication();
+        return new UseCaseTestApplication(new RamseyUuid());
     }
 
     /**

@@ -4,54 +4,56 @@ declare(strict_types=1);
 
 namespace Edeans\Tests\UseCase\Utility;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Edeans\Application\AddTerm\AddTerm;
 use Edeans\Application\Application;
 use Edeans\Application\ListTerms\Term;
 use Edeans\Application\ListTerms\TermsList;
+use Edeans\Domain\Model\Common\UuidProvider;
 use Edeans\Domain\Model\Term\TermId;
-use Edeans\Infrastructure\RamseyUuid;
 
 final class UseCaseTestApplication implements Application
 {
-    private ArrayCollection $termsAdded;
+    private UuidProvider $uuidProvider;
 
-    private ArrayCollection $termsHiddenId;
+    private array $termsAddedArray;
 
-    public function __construct()
+    private array $hiddenTermsIdArray;
+
+    public function __construct(UuidProvider $uuidProvider)
     {
-        $this->termsAdded = new ArrayCollection();
-        $this->termsHiddenId = new ArrayCollection();
+        $this->uuidProvider = $uuidProvider;
+
+        $this->termsAddedArray = [];
+        $this->hiddenTermsIdArray = [];
     }
 
     public function addTerm(AddTerm $addTerm): TermId
     {
-        $addedTermId = TermId::fromUuid(new RamseyUuid());
+        $addedTermId = TermId::fromUuid($this->uuidProvider);
 
         $termToList = new Term();
         $termToList->name = $addTerm->name;
-        $this->termsAdded->set($addedTermId->asString(), $termToList);
+        $this->termsAddedArray[$addedTermId->asString()] = $termToList;
 
         return $addedTermId;
     }
 
     public function hideTerm(TermId $id): void
     {
-        $this->termsHiddenId->add($id->asString());
+        $this->hiddenTermsIdArray[] = $id->asString();
     }
 
     public function listTerms(): TermsList
     {
         $termsList = new TermsList();
-        $addedTermsAsArray = $this->termsAdded->toArray();
-        $termsHiddenId = $this->termsHiddenId;
+        $hiddenTermsIdArray = $this->hiddenTermsIdArray;
 
-        array_walk($addedTermsAsArray,
-            function (Term $term, string $termId) use ($termsList, $termsHiddenId) {
-                if (!$termsHiddenId->contains($termId)) {
+        array_walk($this->termsAddedArray,
+            function (Term $term, string $termId) use ($termsList, $hiddenTermsIdArray) {
+                if (!in_array($termId, $hiddenTermsIdArray)) {
                     $termsList->add($term);
                 }
-            },
+            }
         );
 
         return $termsList;
